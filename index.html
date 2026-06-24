@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CampusHub — Jaydeep Dey</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#0f1117;--bg1:#171b26;--bg2:#1e2333;--bg3:#252a3a;
+  --acc:#7c6fcd;--acc2:#5b9bd5;--acc3:#3dba7e;--acc4:#e6a817;--acc5:#e05c5c;
+  --t1:#f0f2f8;--t2:#9aa0b8;--t3:#666d85;--bd:#2a2f42;
+  --r:12px;--rs:8px;
+}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg0);color:var(--t1);font-size:14px;line-height:1.5;min-height:100vh;display:flex}
+.shell{display:flex;width:100%;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sb{width:216px;min-width:216px;background:var(--bg1);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:10}
+.logo{padding:18px 16px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.li{width:30px;height:30px;background:var(--acc);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;flex-shrink:0}
+.lt{font-size:15px;font-weight:600;color:var(--t1)}
+.ls{font-size:11px;color:var(--t3)}
+nav{flex:1;padding:12px 8px;overflow-y:auto}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--rs);cursor:pointer;color:var(--t2);font-size:13px;margin-bottom:2px;transition:background .15s,color .15s;user-select:none}
+.ni:hover{background:var(--bg3);color:var(--t1)}
+.ni.active{background:rgba(124,111,205,.22);color:var(--acc)}
+.ni i{font-size:16px;width:18px;text-align:center;flex-shrink:0}
+.nb{margin-left:auto;background:var(--acc5);color:#fff;font-size:10px;border-radius:99px;padding:1px 7px;font-weight:600}
+.uc{margin:8px;background:var(--bg2);border-radius:var(--rs);padding:10px 12px;display:flex;align-items:center;gap:9px;border:1px solid var(--bd)}
+.av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;color:#fff;flex-shrink:0}
+.un{font-size:13px;font-weight:500;color:var(--t1)}
+.ur{font-size:11px;color:var(--t3)}
+.qb{margin:0 8px 14px;border-radius:var(--rs);padding:10px 13px;border:1px solid var(--bd);border-left:3px solid var(--acc);background:rgba(124,111,205,.06)}
+.qt{font-size:11px;color:var(--t2);font-style:italic;line-height:1.6}
+
+/* ── MAIN ── */
+.main{flex:1;margin-left:216px;display:flex;flex-direction:column;min-height:100vh}
+.tb{padding:14px 20px 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg0);z-index:5;border-bottom:1px solid var(--bd);padding-bottom:14px}
+.sbox{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);padding:7px 13px;flex:1;max-width:320px}
+.sbox input{background:none;border:none;outline:none;color:var(--t2);font-size:13px;flex:1;width:100%}
+.sbox input::placeholder{color:var(--t3)}
+.tr{display:flex;gap:8px}
+.ib{width:34px;height:34px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);font-size:16px;position:relative}
+.nd{position:absolute;top:6px;right:6px;width:6px;height:6px;background:var(--acc5);border-radius:50%;border:1.5px solid var(--bg0)}
+
+/* ── PAGES ── */
+.page{display:none;padding:20px}
+.page.on{display:block}
+.bk{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--acc);cursor:pointer;margin-bottom:14px;padding:5px 10px;border-radius:var(--rs);background:rgba(124,111,205,.1);transition:background .15s}
+.bk:hover{background:rgba(124,111,205,.2)}
+h1.ph{font-size:20px;font-weight:600;color:var(--t1);margin-bottom:3px}
+p.ps{font-size:13px;color:var(--t3);margin-bottom:16px}
+
+/* ── CARDS ── */
+.pn{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px}
+.ph2{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.pt{font-size:13px;font-weight:500;color:var(--t1);display:flex;align-items:center;gap:7px}
+.pt i{font-size:15px;color:var(--t3)}
+.va{font-size:12px;color:var(--acc);cursor:pointer}
+
+/* ── STAT GRID ── */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.sc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color .15s,transform .1s}
+.sc:hover{border-color:var(--acc);transform:translateY(-1px)}
+.si{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:9px}
+.snum{font-size:22px;font-weight:600;color:var(--t1)}
+.slbl{font-size:12px;color:var(--t3);margin-top:1px}
+.slink{font-size:11px;color:var(--acc);margin-top:7px;display:flex;align-items:center;gap:3px}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.g2c{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ── SCHEDULE ROWS ── */
+.dr{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd)}
+.dr:last-child{border-bottom:none}
+.dtime{font-size:11px;color:var(--t3);width:56px;flex-shrink:0;padding-top:2px}
+.ddot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dn{font-size:13px;color:var(--t1)}
+.dm{font-size:11px;color:var(--t3);margin-top:1px}
+.dtg{font-size:11px;padding:2px 9px;border-radius:99px;white-space:nowrap;margin-left:auto}
+.tl{background:rgba(124,111,205,.18);color:#b0a7e8}
+.tg{background:rgba(61,186,126,.14);color:#5ed49a}
+.tw{background:rgba(230,168,23,.13);color:#f0c04a}
+.tp{background:rgba(91,155,213,.13);color:#7fb9e8}
+
+/* ── TASK ROWS ── */
+.tr2{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd)}
+.tr2:last-child{border-bottom:none}
+.ck{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--bd);flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:all .15s}
+.ck.done{background:var(--acc3);border-color:var(--acc3)}
+.tn{font-size:13px;color:var(--t1)}
+.tn.done{text-decoration:line-through;color:var(--t3)}
+.tm2{font-size:11px;color:var(--t3);margin-top:1px}
+.td{font-size:11px;font-weight:500;white-space:nowrap;padding-top:2px}
+.du{color:var(--acc5)}.ds{color:var(--acc4)}.dk{color:var(--t3)}
+
+/* ── SKILL BARS ── */
+.skr{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.skr:last-child{margin-bottom:0}
+.skn{font-size:12px;color:var(--t2);width:86px;flex-shrink:0}
+.bt{flex:1;height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.bf{height:100%;border-radius:99px;transition:width .5s ease}
+.sp{font-size:11px;color:var(--t3);width:30px;text-align:right}
+
+/* ── RING ── */
+.ring{display:flex;align-items:center;gap:14px;margin-top:4px}
+.lg{display:flex;flex-direction:column;gap:7px}
+.lr{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
+.ld{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+/* ── ANNOUNCEMENTS ── */
+.ann{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd)}
+.ann:last-child{border-bottom:none}
+.aic{width:32px;height:32px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.at2{font-size:13px;color:var(--t1)}
+.am{font-size:11px;color:var(--t3);margin-top:1px}
+.ad{font-size:11px;color:var(--t3);margin-top:3px}
+
+/* ── BANNER ── */
+.bn{background:var(--bg2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r);padding:15px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.bb{background:var(--acc);color:#fff;border:none;border-radius:var(--rs);padding:9px 17px;font-size:13px;cursor:pointer;transition:opacity .15s;font-weight:500}
+.bb:hover{opacity:.85}
+
+/* ── QUICK LINKS ── */
+.qi{background:var(--bg3);border-radius:var(--rs);padding:9px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--bd);transition:border-color .15s,background .15s;font-size:13px;color:var(--t2)}
+.qi:hover{border-color:var(--acc);color:var(--t1);background:rgba(124,111,205,.08)}
+.qi i{font-size:15px}
+
+/* ── COURSE / RESOURCE CARDS ── */
+.gc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color .15s,transform .1s}
+.gc:hover{border-color:var(--acc);transform:translateY(-1px)}
+.gt{font-size:13px;font-weight:500;color:var(--t1);margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.gd{font-size:12px;color:var(--t3);line-height:1.5}
+.gtg{font-size:11px;padding:2px 9px;border-radius:99px;margin-top:8px;display:inline-block}
+
+/* ── ASSIGNMENT ROWS ── */
+.ar{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.ar:last-child{border-bottom:none}
+.ari{width:32px;height:32px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.atn{font-size:13px;color:var(--t1)}
+.atm{font-size:11px;color:var(--t3);margin-top:1px}
+.hb{font-size:11px;padding:5px 11px;border-radius:6px;background:rgba(124,111,205,.18);color:#b0a7e8;border:none;cursor:pointer;white-space:nowrap;transition:background .15s;font-weight:500}
+.hb:hover{background:rgba(124,111,205,.32)}
+
+/* ── GRADE ROWS ── */
+.grr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.grr:last-child{border-bottom:none}
+.grd{font-size:14px;font-weight:600;width:30px;text-align:right}
+
+/* ── ATTENDANCE ── */
+.atc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:13px}
+.ats{font-size:13px;font-weight:500;color:var(--t1);margin-bottom:5px}
+.atp{font-size:22px;font-weight:600;margin-bottom:4px}
+.atbt{height:5px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:4px}
+.atbf{height:100%;border-radius:99px}
+.atn2{font-size:11px;color:var(--t3)}
+
+/* ── TIMETABLE ── */
+.tt-grid{display:grid;grid-template-columns:58px repeat(5,1fr);gap:6px}
+.tt-hdr{font-size:11px;color:var(--t3);text-align:center;padding:4px 0}
+.tt-time{font-size:11px;color:var(--t3);padding-top:7px}
+.tt-cell{border-radius:6px;padding:6px 8px;font-size:11px}
+
+/* ── MESSAGES ── */
+.msg{display:flex;gap:10px;padding:10px;border-radius:var(--rs);margin-bottom:6px}
+.msg.unread{background:rgba(124,111,205,.07)}
+.mav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.mname{font-size:13px;color:var(--t1);font-weight:500}
+.mbody{font-size:12px;color:var(--t2);margin-top:2px;line-height:1.5}
+.mdate{font-size:11px;color:var(--t3);margin-top:3px}
+.mdot{width:7px;height:7px;background:var(--acc5);border-radius:50%;flex-shrink:0;margin-top:4px}
+
+/* ── TOGGLE ── */
+.tog{width:36px;height:20px;border-radius:99px;padding:2px;display:flex;cursor:pointer;transition:background .2s}
+.tog.on{background:var(--acc);justify-content:flex-end}
+.tog.off{background:var(--bg3);justify-content:flex-start}
+.tog-dot{width:16px;height:16px;background:#fff;border-radius:50%}
+
+/* ── WARNING ── */
+.warn{background:rgba(230,168,23,.1);border:1px solid rgba(230,168,23,.3);border-radius:var(--rs);padding:10px 14px;font-size:12px;color:var(--acc4);display:flex;align-items:flex-start;gap:8px}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:99px}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ══ SIDEBAR ══ -->
+<div class="sb">
+  <div class="logo">
+    <div class="li"><i class="ti ti-square-rounded-letter-c"></i></div>
+    <div><div class="lt">CampusHub</div><div class="ls">Learn. Grow. Achieve.</div></div>
+  </div>
+  <nav>
+    <div class="ni active" onclick="go('dash')"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+    <div class="ni" onclick="go('courses')"><i class="ti ti-book"></i> My Courses</div>
+    <div class="ni" onclick="go('schedule')"><i class="ti ti-calendar"></i> Schedule</div>
+    <div class="ni" onclick="go('assign')"><i class="ti ti-clipboard-list"></i> Assignments <span class="nb">4</span></div>
+    <div class="ni" onclick="go('exams')"><i class="ti ti-file-certificate"></i> Exams</div>
+    <div class="ni" onclick="go('grades')"><i class="ti ti-chart-bar"></i> Grades</div>
+    <div class="ni" onclick="go('resources')"><i class="ti ti-folder"></i> Resources</div>
+    <div class="ni" onclick="go('attend')"><i class="ti ti-activity"></i> Attendance</div>
+    <div class="ni" onclick="go('msgs')"><i class="ti ti-message"></i> Messages <span class="nb">2</span></div>
+    <div class="ni" onclick="go('settings')"><i class="ti ti-settings"></i> Settings</div>
+  </nav>
+  <div class="uc">
+    <div class="av">JD</div>
+    <div><div class="un">Jaydeep Dey</div><div class="ur">B.Tech CSE · 2nd Year</div></div>
+  </div>
+  <div class="qb" style="margin-top:8px">
+    <div class="qt">"Discipline today,<br>success tomorrow."</div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="tb">
+    <div class="sbox" style="position:relative;flex:1;max-width:340px">
+      <i class="ti ti-search" style="color:var(--t3);font-size:15px;flex-shrink:0"></i>
+      <input id="searchInput" type="text" placeholder="Search pages… (e.g. grades, exams)" oninput="doSearch(this.value)" onkeydown="searchKey(event)" autocomplete="off"/>
+      <span id="kbdHint" style="font-size:11px;color:var(--t3);background:var(--bg3);padding:2px 7px;border-radius:4px;white-space:nowrap">⌘K</span>
+      <!-- dropdown -->
+      <div id="searchDrop" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.4)"></div>
+    </div>
+    <div class="tr">
+      <!-- NOTIFICATIONS -->
+      <div class="ib" id="bellBtn" onclick="togglePanel('notifPanel')" title="Notifications" style="position:relative">
+        <i class="ti ti-bell"></i><span class="nd" id="notifDot"></span>
+        <div id="notifPanel" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:280px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.5);padding:12px">
+          <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:10px;display:flex;justify-content:space-between">Notifications <span style="font-size:11px;color:var(--acc);cursor:pointer" onclick="clearNotifs()">Mark all read</span></div>
+          <div class="notif-item" style="display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--bd)"><div style="width:8px;height:8px;background:var(--acc5);border-radius:50%;flex-shrink:0;margin-top:4px"></div><div><div style="font-size:12px;color:var(--t1)">Scikit-Learn notes due <b>today</b></div><div style="font-size:11px;color:var(--t3);margin-top:2px">Machine Learning · Just now</div></div></div>
+          <div class="notif-item" style="display:flex;gap:9px;padding:8px 0;border-bottom:1px solid var(--bd)"><div style="width:8px;height:8px;background:var(--acc4);border-radius:50%;flex-shrink:0;margin-top:4px"></div><div><div style="font-size:12px;color:var(--t1)">New message from <b>Prof. Chatterjee</b></div><div style="font-size:11px;color:var(--t3);margin-top:2px">Messages · 10:30 AM</div></div></div>
+          <div class="notif-item" style="display:flex;gap:9px;padding:8px 0"><div style="width:8px;height:8px;background:var(--acc);border-radius:50%;flex-shrink:0;margin-top:4px"></div><div><div style="font-size:12px;color:var(--t1)">German attendance <b>below 75%</b></div><div style="font-size:11px;color:var(--t3);margin-top:2px">Attendance · Yesterday</div></div></div>
+        </div>
+      </div>
+      <!-- CALENDAR / TODAY -->
+      <div class="ib" onclick="go('schedule')" title="Open Schedule" style="position:relative">
+        <i class="ti ti-calendar"></i>
+        <span style="position:absolute;top:4px;right:4px;font-size:8px;font-weight:700;color:var(--acc4);line-height:1">24</span>
+      </div>
+      <!-- DARK / LIGHT TOGGLE -->
+      <div class="ib" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark mode">
+        <i class="ti ti-moon" id="themeIcon"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- search keyboard shortcut overlay -->
+  <div id="searchOverlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);align-items:flex-start;justify-content:center;padding-top:80px" onclick="closeSearch()">
+    <div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);width:500px;max-width:90vw;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--bd)">
+        <i class="ti ti-search" style="color:var(--t3);font-size:16px"></i>
+        <input id="overlayInput" type="text" placeholder="Search pages, courses, topics…" oninput="doOverlaySearch(this.value)" onkeydown="overlayKey(event)" style="flex:1;background:none;border:none;outline:none;font-size:15px;color:var(--t1)" autocomplete="off"/>
+        <span style="font-size:11px;color:var(--t3);background:var(--bg3);padding:2px 7px;border-radius:4px;cursor:pointer" onclick="closeSearch()">ESC</span>
+      </div>
+      <div id="overlayResults" style="padding:8px"></div>
+    </div>
+  </div>
+
+  <!-- ▸ DASHBOARD -->
+  <div id="dash" class="page on">
+    <h1 class="ph">Welcome back, Jaydeep 👋</h1>
+    <p class="ps">Here's what's happening with your academics today — Wed, Jun 24</p>
+
+    <div class="g4">
+      <div class="sc" onclick="go('courses')">
+        <div class="si" style="background:rgba(124,111,205,.18)"><i class="ti ti-book-2" style="color:var(--acc)"></i></div>
+        <div class="snum">6</div><div class="slbl">Courses enrolled</div>
+        <div class="slink">View courses <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="sc" onclick="go('assign')">
+        <div class="si" style="background:rgba(91,155,213,.18)"><i class="ti ti-clipboard-check" style="color:var(--acc2)"></i></div>
+        <div class="snum">4</div><div class="slbl">Assignments due</div>
+        <div class="slink">View all <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="sc" onclick="go('exams')">
+        <div class="si" style="background:rgba(230,168,23,.15)"><i class="ti ti-calendar-event" style="color:var(--acc4)"></i></div>
+        <div class="snum">2</div><div class="slbl">Exams upcoming</div>
+        <div class="slink">View schedule <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="sc" onclick="go('grades')">
+        <div class="si" style="background:rgba(61,186,126,.15)"><i class="ti ti-trending-up" style="color:var(--acc3)"></i></div>
+        <div class="snum">8.42</div><div class="slbl">CGPA</div>
+        <div class="slink">View grades <i class="ti ti-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="pn">
+        <div class="ph2"><div class="pt"><i class="ti ti-calendar-time"></i> Today's schedule</div></div>
+        <div class="dr"><span class="dtime">9:00 AM</span><div class="ddot" style="background:var(--acc)"></div><div style="flex:1"><div class="dn">Python + Pandas</div><div class="dm">Practice problems</div></div><span class="dtg tw">Practice</span></div>
+        <div class="dr"><span class="dtime">11:30 AM</span><div class="ddot" style="background:var(--acc2)"></div><div style="flex:1"><div class="dn">ML — Scikit-Learn</div><div class="dm">Classifiers &amp; metrics</div></div><span class="dtg tl">Lecture</span></div>
+        <div class="dr"><span class="dtime">1:00 PM</span><div class="ddot" style="background:var(--acc3)"></div><div style="flex:1"><div class="dn">Disease Prediction project</div><div class="dm">Lab 2, Block A</div></div><span class="dtg tg">Lab</span></div>
+        <div class="dr"><span class="dtime">3:00 PM</span><div class="ddot" style="background:var(--acc4)"></div><div style="flex:1"><div class="dn">Flask &amp; Web Dev</div><div class="dm">Routing, templates</div></div><span class="dtg tl">Lecture</span></div>
+        <div class="dr"><span class="dtime">5:00 PM</span><div class="ddot" style="background:#b05ce0"></div><div style="flex:1"><div class="dn">German language</div><div class="dm">Exam prep · Akkusativ</div></div><span class="dtg tp">Practice</span></div>
+        <div style="margin-top:10px;text-align:center"><span class="va" onclick="go('schedule')">View full schedule <i class="ti ti-arrow-right" style="font-size:11px"></i></span></div>
+      </div>
+      <div class="pn">
+        <div class="ph2"><div class="pt"><i class="ti ti-list-check"></i> Tasks &amp; assignments</div><span class="va" onclick="go('assign')">View all</span></div>
+        <div class="tr2"><div class="ck done" onclick="chk(this)"><i class="ti ti-check" style="font-size:10px;color:#fff"></i></div><div style="flex:1"><div class="tn done">Pandas DataFrame practice</div><div class="tm2">Python</div></div><span class="td dk">Done</span></div>
+        <div class="tr2"><div class="ck done" onclick="chk(this)"><i class="ti ti-check" style="font-size:10px;color:#fff"></i></div><div style="flex:1"><div class="tn done">German: Akkusativ exercises</div><div class="tm2">German</div></div><span class="td dk">Done</span></div>
+        <div class="tr2"><div class="ck" onclick="chk(this)"></div><div style="flex:1"><div class="tn">Scikit-Learn classifier notes</div><div class="tm2">Machine Learning</div></div><span class="td du">Due Today</span></div>
+        <div class="tr2"><div class="ck" onclick="chk(this)"></div><div style="flex:1"><div class="tn">Flask routing + templates</div><div class="tm2">Web Dev</div></div><span class="td ds">Jun 25</span></div>
+        <div class="tr2"><div class="ck" onclick="chk(this)"></div><div style="flex:1"><div class="tn">Disease Prediction — model eval</div><div class="tm2">AI Project</div></div><span class="td ds">Jun 27</span></div>
+        <div class="tr2"><div class="ck" onclick="chk(this)"></div><div style="flex:1"><div class="tn">Smart Waste — report draft</div><div class="tm2">IoT Project</div></div><span class="td dk">Jun 30</span></div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="pn">
+        <div class="ph2"><div class="pt"><i class="ti ti-chart-bar"></i> Learning progress</div></div>
+        <div class="skr"><span class="skn">Python</span><div class="bt"><div class="bf" style="width:72%;background:var(--acc2)"></div></div><span class="sp">72%</span></div>
+        <div class="skr"><span class="skn">Pandas</span><div class="bt"><div class="bf" style="width:55%;background:var(--acc)"></div></div><span class="sp">55%</span></div>
+        <div class="skr"><span class="skn">NumPy</span><div class="bt"><div class="bf" style="width:50%;background:var(--acc)"></div></div><span class="sp">50%</span></div>
+        <div class="skr"><span class="skn">Scikit-Learn</span><div class="bt"><div class="bf" style="width:30%;background:var(--acc3)"></div></div><span class="sp">30%</span></div>
+        <div class="skr"><span class="skn">Flask</span><div class="bt"><div class="bf" style="width:40%;background:var(--acc3)"></div></div><span class="sp">40%</span></div>
+        <div class="skr"><span class="skn">German</span><div class="bt"><div class="bf" style="width:25%;background:var(--acc4)"></div></div><span class="sp">25%</span></div>
+      </div>
+      <div class="pn">
+        <div class="ph2"><div class="pt"><i class="ti ti-chart-pie"></i> Progress overview</div></div>
+        <div class="ring">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="31" fill="none" stroke="#252a3a" stroke-width="10"/>
+            <circle cx="40" cy="40" r="31" fill="none" stroke="#3dba7e" stroke-width="10" stroke-dasharray="138 195" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <circle cx="40" cy="40" r="31" fill="none" stroke="#7c6fcd" stroke-width="10" stroke-dasharray="29 195" stroke-dashoffset="-138" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <circle cx="40" cy="40" r="31" fill="none" stroke="#e6a817" stroke-width="10" stroke-dasharray="26 195" stroke-dashoffset="-167" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text x="40" y="44" text-anchor="middle" font-size="12" font-weight="600" fill="#f0f2f8">72%</text>
+          </svg>
+          <div class="lg">
+            <div class="lr"><div class="ld" style="background:var(--acc3)"></div>Completed 72%</div>
+            <div class="lr"><div class="ld" style="background:var(--acc)"></div>In progress 15%</div>
+            <div class="lr"><div class="ld" style="background:var(--acc4)"></div>Not started 13%</div>
+          </div>
+        </div>
+      </div>
+      <div class="pn">
+        <div class="ph2"><div class="pt"><i class="ti ti-speakerphone"></i> Announcements</div></div>
+        <div class="ann"><div class="aic" style="background:rgba(124,111,205,.18)"><i class="ti ti-trophy" style="color:var(--acc)"></i></div><div><div class="at2">Hackathon 2024 open!</div><div class="am">AI/ML track · Register by Jun 28</div><div class="ad">Jun 23</div></div></div>
+        <div class="ann"><div class="aic" style="background:rgba(230,168,23,.15)"><i class="ti ti-calendar-event" style="color:var(--acc4)"></i></div><div><div class="at2">End sem schedule released</div><div class="am">Check dates for all courses</div><div class="ad">Jun 21</div></div></div>
+        <div class="ann"><div class="aic" style="background:rgba(61,186,126,.15)"><i class="ti ti-certificate" style="color:var(--acc3)"></i></div><div><div class="at2">Python certification exam</div><div class="am">Adamas CS dept · Next week</div><div class="ad">Jun 20</div></div></div>
+      </div>
+    </div>
+
+    <div class="bn">
+      <div style="display:flex;align-items:center;gap:13px">
+        <div style="font-size:28px">🚀</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t1)">Keep pushing forward, Jaydeep!</div><div style="font-size:12px;color:var(--t2);margin-top:3px">12-day streak! Your Disease Prediction project is almost done — finish strong!</div></div>
+      </div>
+      <button class="bb" onclick="go('resources')">Explore Resources →</button>
+    </div>
+
+    <div class="pn">
+      <div class="ph2"><div class="pt"><i class="ti ti-link"></i> Quick access</div></div>
+      <div class="g2c">
+        <div class="qi" onclick="go('resources')"><i class="ti ti-notes" style="color:var(--acc)"></i> Python study notes ↗</div>
+        <div class="qi" onclick="go('courses')"><i class="ti ti-activity" style="color:var(--acc3)"></i> AI project help ↗</div>
+        <div class="qi" onclick="go('exams')"><i class="ti ti-language" style="color:var(--acc4)"></i> German exam prep ↗</div>
+        <div class="qi" onclick="go('resources')"><i class="ti ti-brain" style="color:var(--acc2)"></i> ML practice ↗</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▸ MY COURSES -->
+  <div id="courses" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">My Courses</h1>
+    <p class="ps">6 courses enrolled this semester — click any card to open study notes</p>
+    <div class="g2">
+      <div class="gc" onclick="window.open('https://docs.python.org/3/','_blank')">
+        <div class="gt"><i class="ti ti-brand-python" style="color:var(--acc2)"></i> Python Programming</div>
+        <div class="gd">Core Python, OOP, file handling, exceptions, modules, comprehensions</div>
+        <span class="gtg" style="background:rgba(91,155,213,.15);color:#7fb9e8">72% complete · Open docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://pandas.pydata.org/docs/','_blank')">
+        <div class="gt"><i class="ti ti-table" style="color:var(--acc)"></i> Pandas &amp; NumPy</div>
+        <div class="gd">DataFrames, array operations, data cleaning, indexing, groupby</div>
+        <span class="gtg" style="background:rgba(124,111,205,.2);color:#a89fe0">52% complete · Open docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://scikit-learn.org/stable/','_blank')">
+        <div class="gt"><i class="ti ti-brain" style="color:var(--acc3)"></i> Machine Learning</div>
+        <div class="gd">Scikit-Learn, classifiers, regression, pipelines, model evaluation</div>
+        <span class="gtg" style="background:rgba(61,186,126,.15);color:#5ed49a">30% complete · Open docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://flask.palletsprojects.com/','_blank')">
+        <div class="gt"><i class="ti ti-server" style="color:var(--acc4)"></i> Flask &amp; Web Dev</div>
+        <div class="gd">Routing, Jinja2 templates, forms, REST APIs, SQLAlchemy</div>
+        <span class="gtg" style="background:rgba(230,168,23,.15);color:#f0c04a">40% complete · Open docs ↗</span>
+      </div>
+      <div class="gc" onclick="go('assign')">
+        <div class="gt"><i class="ti ti-activity" style="color:var(--acc5)"></i> AI Disease Prediction</div>
+        <div class="gd">Project: ML model for disease classification using patient symptom data</div>
+        <span class="gtg" style="background:rgba(224,92,92,.15);color:#f08080">In progress · View assignments ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://www.goethe.de/en/spr/ueb.html','_blank')">
+        <div class="gt"><i class="ti ti-language" style="color:#b05ce0"></i> German Language</div>
+        <div class="gd">Cases, articles, verb conjugation, formal email writing, exam prep</div>
+        <span class="gtg" style="background:rgba(176,92,224,.15);color:#d09ae0">25% complete · Practice ↗</span>
+      </div>
+    </div>
+    <div class="pn" style="margin-top:12px">
+      <div class="ph2"><div class="pt"><i class="ti ti-chart-bar"></i> Skill progress across all courses</div></div>
+      <div class="skr"><span class="skn">Python</span><div class="bt"><div class="bf" style="width:72%;background:var(--acc2)"></div></div><span class="sp">72%</span></div>
+      <div class="skr"><span class="skn">Pandas</span><div class="bt"><div class="bf" style="width:55%;background:var(--acc)"></div></div><span class="sp">55%</span></div>
+      <div class="skr"><span class="skn">NumPy</span><div class="bt"><div class="bf" style="width:50%;background:var(--acc)"></div></div><span class="sp">50%</span></div>
+      <div class="skr"><span class="skn">Scikit-Learn</span><div class="bt"><div class="bf" style="width:30%;background:var(--acc3)"></div></div><span class="sp">30%</span></div>
+      <div class="skr"><span class="skn">Flask</span><div class="bt"><div class="bf" style="width:40%;background:var(--acc3)"></div></div><span class="sp">40%</span></div>
+      <div class="skr"><span class="skn">German</span><div class="bt"><div class="bf" style="width:25%;background:var(--acc4)"></div></div><span class="sp">25%</span></div>
+    </div>
+  </div>
+
+  <!-- ▸ SCHEDULE -->
+  <div id="schedule" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Weekly Schedule</h1>
+    <p class="ps">June 24 – June 28, 2024</p>
+    <div class="pn">
+      <div class="tt-grid" style="margin-bottom:8px;text-align:center">
+        <div></div>
+        <div class="tt-hdr">Mon</div>
+        <div class="tt-hdr" style="color:var(--acc);font-weight:600">Tue ★</div>
+        <div class="tt-hdr">Wed</div>
+        <div class="tt-hdr">Thu</div>
+        <div class="tt-hdr">Fri</div>
+      </div>
+      <div class="tt-grid" style="margin-bottom:7px">
+        <div class="tt-time">9 AM</div>
+        <div class="tt-cell" style="background:rgba(91,155,213,.13);color:#7fb9e8;border-left:2px solid var(--acc2)">Python<br>Practice</div>
+        <div class="tt-cell" style="background:rgba(124,111,205,.13);color:#a89fe0;border-left:2px solid var(--acc)">ML<br>Lecture</div>
+        <div class="tt-cell" style="background:rgba(91,155,213,.13);color:#7fb9e8;border-left:2px solid var(--acc2)">Python<br>Practice</div>
+        <div class="tt-cell" style="background:rgba(61,186,126,.13);color:#5ed49a;border-left:2px solid var(--acc3)">DSA<br>Lab</div>
+        <div class="tt-cell" style="background:rgba(124,111,205,.13);color:#a89fe0;border-left:2px solid var(--acc)">ML<br>Lab</div>
+      </div>
+      <div class="tt-grid" style="margin-bottom:7px">
+        <div class="tt-time">1 PM</div>
+        <div class="tt-cell" style="background:rgba(61,186,126,.13);color:#5ed49a;border-left:2px solid var(--acc3)">Project<br>Work</div>
+        <div class="tt-cell" style="background:rgba(230,168,23,.13);color:#f0c04a;border-left:2px solid var(--acc4)">Flask<br>Lecture</div>
+        <div class="tt-cell" style="background:rgba(61,186,126,.13);color:#5ed49a;border-left:2px solid var(--acc3)">Disease<br>Pred Lab</div>
+        <div class="tt-cell" style="background:rgba(230,168,23,.13);color:#f0c04a;border-left:2px solid var(--acc4)">Flask<br>Lab</div>
+        <div class="tt-cell" style="color:var(--t3);padding:6px 8px;font-size:11px">Free study</div>
+      </div>
+      <div class="tt-grid">
+        <div class="tt-time">5 PM</div>
+        <div class="tt-cell" style="background:rgba(176,92,224,.13);color:#d09ae0;border-left:2px solid #b05ce0">German</div>
+        <div class="tt-cell" style="background:rgba(176,92,224,.13);color:#d09ae0;border-left:2px solid #b05ce0">German</div>
+        <div class="tt-cell" style="background:rgba(176,92,224,.13);color:#d09ae0;border-left:2px solid #b05ce0">German</div>
+        <div class="tt-cell" style="color:var(--t3);font-size:11px;padding:6px 8px">—</div>
+        <div class="tt-cell" style="background:rgba(61,186,126,.13);color:#5ed49a;border-left:2px solid var(--acc3)">Revision</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▸ ASSIGNMENTS -->
+  <div id="assign" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Assignments</h1>
+    <p class="ps">4 pending · 2 submitted</p>
+    <div class="pn">
+      <div class="ar">
+        <div class="ari" style="background:rgba(224,92,92,.15)"><i class="ti ti-file-code" style="color:var(--acc5)"></i></div>
+        <div style="flex:1"><div class="atn">Scikit-Learn classifier notes</div><div class="atm">Machine Learning · Assigned Jun 20</div></div>
+        <span class="td du" style="margin-right:10px">Due Today</span>
+        <button class="hb" onclick="alert('Ask Claude: Scikit-Learn classifier notes help')">Help ↗</button>
+      </div>
+      <div class="ar">
+        <div class="ari" style="background:rgba(91,155,213,.15)"><i class="ti ti-server" style="color:var(--acc2)"></i></div>
+        <div style="flex:1"><div class="atn">Flask routing + templates lab</div><div class="atm">Web Development · Assigned Jun 22</div></div>
+        <span class="td ds" style="margin-right:10px">Jun 25</span>
+        <button class="hb">Help ↗</button>
+      </div>
+      <div class="ar">
+        <div class="ari" style="background:rgba(61,186,126,.15)"><i class="ti ti-activity" style="color:var(--acc3)"></i></div>
+        <div style="flex:1"><div class="atn">Disease Prediction — model evaluation</div><div class="atm">AI Project · Assigned Jun 18</div></div>
+        <span class="td ds" style="margin-right:10px">Jun 27</span>
+        <button class="hb">Help ↗</button>
+      </div>
+      <div class="ar">
+        <div class="ari" style="background:rgba(230,168,23,.15)"><i class="ti ti-trash" style="color:var(--acc4)"></i></div>
+        <div style="flex:1"><div class="atn">Smart Waste — project report draft</div><div class="atm">IoT Project · Assigned Jun 19</div></div>
+        <span class="td dk" style="margin-right:10px">Jun 30</span>
+        <button class="hb">Help ↗</button>
+      </div>
+      <div class="ar" style="opacity:.5">
+        <div class="ari" style="background:rgba(61,186,126,.15)"><i class="ti ti-check" style="color:var(--acc3)"></i></div>
+        <div style="flex:1"><div class="atn" style="text-decoration:line-through">Pandas DataFrame practice</div><div class="atm">Submitted Jun 23</div></div>
+        <span style="font-size:11px;color:var(--acc3);font-weight:500">Submitted ✓</span>
+      </div>
+      <div class="ar" style="opacity:.5">
+        <div class="ari" style="background:rgba(61,186,126,.15)"><i class="ti ti-check" style="color:var(--acc3)"></i></div>
+        <div style="flex:1"><div class="atn" style="text-decoration:line-through">German Akkusativ exercises</div><div class="atm">Submitted Jun 22</div></div>
+        <span style="font-size:11px;color:var(--acc3);font-weight:500">Submitted ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▸ EXAMS -->
+  <div id="exams" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Upcoming Exams</h1>
+    <p class="ps">2 exams in the next 2 weeks — start revising now</p>
+    <div class="pn" style="margin-bottom:12px">
+      <div class="ar">
+        <div class="ari" style="background:rgba(224,92,92,.15)"><i class="ti ti-file-certificate" style="color:var(--acc5)"></i></div>
+        <div style="flex:1"><div class="atn">Python Programming — End Sem</div><div class="atm">June 30, 2024 · Room 301, Block A · 10:00 AM</div></div>
+        <button class="hb" onclick="go('resources')">Revise ↗</button>
+      </div>
+      <div class="ar">
+        <div class="ari" style="background:rgba(230,168,23,.15)"><i class="ti ti-language" style="color:var(--acc4)"></i></div>
+        <div style="flex:1"><div class="atn">German Language — End Sem</div><div class="atm">July 3, 2024 · Room 204, Block B · 2:00 PM</div></div>
+        <button class="hb" onclick="go('resources')">Revise ↗</button>
+      </div>
+    </div>
+    <div class="pn">
+      <div class="ph2"><div class="pt"><i class="ti ti-checklist"></i> Exam prep quick links</div></div>
+      <div class="g2c">
+        <div class="qi" onclick="go('resources')"><i class="ti ti-brand-python" style="color:var(--acc2)"></i> Python revision notes ↗</div>
+        <div class="qi" onclick="go('resources')"><i class="ti ti-language" style="color:#b05ce0"></i> German cheat sheet ↗</div>
+        <div class="qi" onclick="go('resources')"><i class="ti ti-help" style="color:var(--acc3)"></i> Python mock questions ↗</div>
+        <div class="qi" onclick="go('resources')"><i class="ti ti-pencil" style="color:var(--acc4)"></i> German mock test ↗</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▸ GRADES -->
+  <div id="grades" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Grades</h1>
+    <p class="ps">CGPA: 8.42 · Semester 4 · Adamas University</p>
+    <div class="pn">
+      <div class="grr">
+        <div style="flex:1"><div style="font-size:13px;color:var(--t1)">Python Programming</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Internal: 42/50 · Mid-sem: 38/50</div></div>
+        <div style="width:120px"><div class="bt"><div class="bf" style="width:84%;background:var(--acc2)"></div></div></div>
+        <div class="grd" style="color:var(--acc3)">A</div>
+      </div>
+      <div class="grr">
+        <div style="flex:1"><div style="font-size:13px;color:var(--t1)">Machine Learning</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Internal: 38/50 · Mid-sem: 35/50</div></div>
+        <div style="width:120px"><div class="bt"><div class="bf" style="width:73%;background:var(--acc)"></div></div></div>
+        <div class="grd" style="color:var(--acc2)">B+</div>
+      </div>
+      <div class="grr">
+        <div style="flex:1"><div style="font-size:13px;color:var(--t1)">Flask &amp; Web Dev</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Internal: 40/50 · Mid-sem: 36/50</div></div>
+        <div style="width:120px"><div class="bt"><div class="bf" style="width:76%;background:var(--acc3)"></div></div></div>
+        <div class="grd" style="color:var(--acc3)">A−</div>
+      </div>
+      <div class="grr">
+        <div style="flex:1"><div style="font-size:13px;color:var(--t1)">Data Structures</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Internal: 44/50 · Mid-sem: 40/50</div></div>
+        <div style="width:120px"><div class="bt"><div class="bf" style="width:88%;background:var(--acc3)"></div></div></div>
+        <div class="grd" style="color:var(--acc3)">A+</div>
+      </div>
+      <div class="grr">
+        <div style="flex:1"><div style="font-size:13px;color:var(--t1)">German Language</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Internal: 30/50 · Mid-sem: 28/50</div></div>
+        <div style="width:120px"><div class="bt"><div class="bf" style="width:58%;background:var(--acc4)"></div></div></div>
+        <div class="grd" style="color:var(--acc4)">C+</div>
+      </div>
+      <div class="grr">
+        <div style="flex:1"><div style="font-size:13px;color:var(--t1)">AI Project Lab</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Internal: 41/50 · Project: ongoing</div></div>
+        <div style="width:120px"><div class="bt"><div class="bf" style="width:82%;background:var(--acc2)"></div></div></div>
+        <div class="grd" style="color:var(--acc3)">A</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;text-align:right">
+      <button class="hb" onclick="go('resources')">How to improve German grade ↗</button>
+    </div>
+  </div>
+
+  <!-- ▸ RESOURCES -->
+  <div id="resources" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Resources</h1>
+    <p class="ps">Study materials, notes, documentation, and practice problems</p>
+    <div class="g2">
+      <div class="gc" onclick="window.open('https://docs.python.org/3/tutorial/','_blank')">
+        <div class="gt"><i class="ti ti-brand-python" style="color:var(--acc2)"></i> Python Official Tutorial</div>
+        <div class="gd">OOP, file handling, exceptions, modules, comprehensions, decorators</div>
+        <span class="gtg" style="background:rgba(91,155,213,.15);color:#7fb9e8">Open Python docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://pandas.pydata.org/docs/user_guide/index.html','_blank')">
+        <div class="gt"><i class="ti ti-table" style="color:var(--acc)"></i> Pandas User Guide</div>
+        <div class="gd">DataFrame ops, indexing, groupby, merge, pivot, data cleaning</div>
+        <span class="gtg" style="background:rgba(124,111,205,.2);color:#a89fe0">Open Pandas docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://numpy.org/doc/stable/user/quickstart.html','_blank')">
+        <div class="gt"><i class="ti ti-math" style="color:var(--acc2)"></i> NumPy Quickstart</div>
+        <div class="gd">Array creation, math ops, broadcasting, slicing, reshaping</div>
+        <span class="gtg" style="background:rgba(91,155,213,.15);color:#7fb9e8">Open NumPy docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://scikit-learn.org/stable/user_guide.html','_blank')">
+        <div class="gt"><i class="ti ti-brain" style="color:var(--acc3)"></i> Scikit-Learn User Guide</div>
+        <div class="gd">Classification, regression, clustering, pipelines, model evaluation</div>
+        <span class="gtg" style="background:rgba(61,186,126,.15);color:#5ed49a">Open SK-Learn docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://flask.palletsprojects.com/en/stable/quickstart/','_blank')">
+        <div class="gt"><i class="ti ti-server" style="color:var(--acc4)"></i> Flask Quickstart</div>
+        <div class="gd">Routing, Jinja2 templates, forms, blueprints, REST API</div>
+        <span class="gtg" style="background:rgba(230,168,23,.15);color:#f0c04a">Open Flask docs ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://www.goethe.de/en/spr/ueb.html','_blank')">
+        <div class="gt"><i class="ti ti-language" style="color:#b05ce0"></i> Goethe Institut German</div>
+        <div class="gd">Grammar exercises, Akkusativ, Dativ, formal email writing, A1–B1</div>
+        <span class="gtg" style="background:rgba(176,92,224,.15);color:#d09ae0">Open Goethe exercises ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://www.kaggle.com/datasets','_blank')">
+        <div class="gt"><i class="ti ti-database" style="color:var(--acc5)"></i> Kaggle Datasets</div>
+        <div class="gd">Datasets for Disease Prediction &amp; Smart Waste Management projects</div>
+        <span class="gtg" style="background:rgba(224,92,92,.15);color:#f08080">Open Kaggle ↗</span>
+      </div>
+      <div class="gc" onclick="window.open('https://leetcode.com/problemset/','_blank')">
+        <div class="gt"><i class="ti ti-code" style="color:var(--acc2)"></i> LeetCode Practice</div>
+        <div class="gd">Python coding problems — arrays, strings, OOP, dynamic programming</div>
+        <span class="gtg" style="background:rgba(91,155,213,.15);color:#7fb9e8">Open LeetCode ↗</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▸ ATTENDANCE -->
+  <div id="attend" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Attendance</h1>
+    <p class="ps">Semester 4 · Updated Jun 24, 2024 · Minimum required: 75%</p>
+    <div class="g3" style="margin-bottom:12px">
+      <div class="atc"><div class="ats">Python Programming</div><div class="atp" style="color:var(--acc3)">88%</div><div class="atbt"><div class="atbf" style="width:88%;background:var(--acc3)"></div></div><div class="atn2">22 / 25 classes attended</div></div>
+      <div class="atc"><div class="ats">Machine Learning</div><div class="atp" style="color:var(--acc3)">82%</div><div class="atbt"><div class="atbf" style="width:82%;background:var(--acc3)"></div></div><div class="atn2">18 / 22 classes attended</div></div>
+      <div class="atc"><div class="ats">Flask &amp; Web Dev</div><div class="atp" style="color:var(--acc2)">76%</div><div class="atbt"><div class="atbf" style="width:76%;background:var(--acc2)"></div></div><div class="atn2">19 / 25 classes attended</div></div>
+      <div class="atc"><div class="ats">Data Structures</div><div class="atp" style="color:var(--acc3)">92%</div><div class="atbt"><div class="atbf" style="width:92%;background:var(--acc3)"></div></div><div class="atn2">23 / 25 classes attended</div></div>
+      <div class="atc"><div class="ats">German Language</div><div class="atp" style="color:var(--acc4)">68%</div><div class="atbt"><div class="atbf" style="width:68%;background:var(--acc4)"></div></div><div class="atn2">17 / 25 classes ⚠</div></div>
+      <div class="atc"><div class="ats">AI Project Lab</div><div class="atp" style="color:var(--acc3)">90%</div><div class="atbt"><div class="atbf" style="width:90%;background:var(--acc3)"></div></div><div class="atn2">9 / 10 sessions attended</div></div>
+    </div>
+    <div class="warn"><i class="ti ti-alert-triangle" style="font-size:16px;flex-shrink:0;margin-top:1px"></i><span>German Language attendance is <strong>68%</strong> — below the required 75%. You need to attend at least <strong>2 more classes</strong> to avoid exam debarment.</span></div>
+  </div>
+
+  <!-- ▸ MESSAGES -->
+  <div id="msgs" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Messages</h1>
+    <p class="ps">2 unread messages from faculty</p>
+    <div class="pn">
+      <div class="msg unread">
+        <div class="mav" style="background:rgba(124,111,205,.2)"><i class="ti ti-user" style="color:var(--acc)"></i></div>
+        <div style="flex:1">
+          <div class="mname">Prof. Chatterjee <span style="font-size:11px;color:var(--t3);font-weight:400">(Machine Learning)</span></div>
+          <div class="mbody">Please submit your classifier notes by tonight. Good work on the mid-sem — keep it up!</div>
+          <div class="mdate">Today · 10:30 AM</div>
+        </div>
+        <div class="mdot"></div>
+      </div>
+      <div class="msg unread">
+        <div class="mav" style="background:rgba(61,186,126,.15)"><i class="ti ti-user" style="color:var(--acc3)"></i></div>
+        <div style="flex:1">
+          <div class="mname">Prof. Müller <span style="font-size:11px;color:var(--t3);font-weight:400">(German Language)</span></div>
+          <div class="mbody">Reminder: end-semester German exam is July 3. Please practise the Dativ case and formal email writing before the exam.</div>
+          <div class="mdate">Yesterday · 4:15 PM</div>
+        </div>
+        <div class="mdot"></div>
+      </div>
+      <div class="msg">
+        <div class="mav" style="background:var(--bg3)"><i class="ti ti-users" style="color:var(--t3)"></i></div>
+        <div style="flex:1">
+          <div class="mname">CSE 2nd Year Group</div>
+          <div class="mbody">Hackathon team formation happening this Friday. Anyone interested in the AI/ML track?</div>
+          <div class="mdate">Jun 22 · 6:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▸ SETTINGS -->
+  <div id="settings" class="page">
+    <div class="bk" onclick="go('dash')"><i class="ti ti-arrow-left"></i> Back to Dashboard</div>
+    <h1 class="ph">Settings</h1>
+    <p class="ps">Manage your profile and preferences</p>
+    <div class="pn">
+      <div style="display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--bd);margin-bottom:14px">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff">JD</div>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:var(--t1)">Jaydeep Dey</div>
+          <div style="font-size:12px;color:var(--t3)">B.Tech CSE · Adamas University · 2nd Year</div>
+          <div style="font-size:12px;color:var(--t3);margin-top:2px">Roll: AU-CSE-2023-047</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--bd)">
+          <div><div style="font-size:13px;color:var(--t1)">Dark mode</div><div style="font-size:11px;color:var(--t3)">Currently active</div></div>
+          <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tog-dot"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--bd)">
+          <div><div style="font-size:13px;color:var(--t1)">Assignment reminders</div><div style="font-size:11px;color:var(--t3)">Get notified 24h before due date</div></div>
+          <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tog-dot"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--bd)">
+          <div><div style="font-size:13px;color:var(--t1)">Exam alerts</div><div style="font-size:11px;color:var(--t3)">Notify 3 days before exam</div></div>
+          <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tog-dot"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0">
+          <div><div style="font-size:13px;color:var(--t1)">Attendance warnings</div><div style="font-size:11px;color:var(--t3)">Alert when below 75%</div></div>
+          <div class="tog on" onclick="this.classList.toggle('on');this.classList.toggle('off')"><div class="tog-dot"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+/* ── PAGE NAVIGATION ── */
+const pageToNav = {
+  dash:'Dashboard', courses:'My Courses', schedule:'Schedule',
+  assign:'Assignments', exams:'Exams', grades:'Grades',
+  resources:'Resources', attend:'Attendance', msgs:'Messages', settings:'Settings'
+};
+function go(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n => {
+    if(n.textContent.trim().startsWith(pageToNav[id])) n.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+  closeAllPanels();
+  closeSearch();
+}
+
+/* ── TASK CHECKBOXES ── */
+function chk(el) {
+  el.classList.toggle('done');
+  const t = el.parentElement.querySelector('.tn');
+  if(t) t.classList.toggle('done');
+  el.innerHTML = el.classList.contains('done') ? '<i class="ti ti-check" style="font-size:10px;color:#fff"></i>' : '';
+}
+
+/* ── SEARCH DATA ── */
+const searchIndex = [
+  { label:'Dashboard', desc:'Overview, stats, schedule, tasks', page:'dash', icon:'ti-layout-dashboard' },
+  { label:'My Courses', desc:'Python, ML, Flask, German, AI project', page:'courses', icon:'ti-book' },
+  { label:'Python Programming', desc:'OOP, file handling, exceptions, modules', page:'courses', icon:'ti-brand-python' },
+  { label:'Pandas & NumPy', desc:'DataFrames, arrays, indexing, groupby', page:'courses', icon:'ti-table' },
+  { label:'Machine Learning', desc:'Scikit-Learn, classifiers, regression', page:'courses', icon:'ti-brain' },
+  { label:'Flask & Web Dev', desc:'Routing, Jinja2, forms, REST API', page:'courses', icon:'ti-server' },
+  { label:'German Language', desc:'Akkusativ, Dativ, email writing, exam', page:'courses', icon:'ti-language' },
+  { label:'Schedule', desc:'Weekly timetable, Mon–Fri classes', page:'schedule', icon:'ti-calendar' },
+  { label:'Assignments', desc:'4 pending tasks, due dates, help links', page:'assign', icon:'ti-clipboard-list' },
+  { label:'Scikit-Learn classifier notes', desc:'Due today — Machine Learning', page:'assign', icon:'ti-file-code' },
+  { label:'Flask routing lab', desc:'Due Jun 25 — Web Development', page:'assign', icon:'ti-server' },
+  { label:'Disease Prediction eval', desc:'Due Jun 27 — AI Project', page:'assign', icon:'ti-activity' },
+  { label:'Exams', desc:'Python end-sem Jun 30, German Jul 3', page:'exams', icon:'ti-file-certificate' },
+  { label:'Python exam', desc:'June 30, Room 301, Block A', page:'exams', icon:'ti-brand-python' },
+  { label:'German exam', desc:'July 3, Room 204, Block B', page:'exams', icon:'ti-language' },
+  { label:'Grades', desc:'CGPA 8.42 — all subject grades', page:'grades', icon:'ti-chart-bar' },
+  { label:'Resources', desc:'Docs, Kaggle, LeetCode, Goethe', page:'resources', icon:'ti-folder' },
+  { label:'Attendance', desc:'German 68% — below minimum 75%', page:'attend', icon:'ti-activity' },
+  { label:'Messages', desc:'2 unread — Prof. Chatterjee, Prof. Müller', page:'msgs', icon:'ti-message' },
+  { label:'Settings', desc:'Profile, notifications, theme', page:'settings', icon:'ti-settings' },
+];
+
+function runSearch(q) {
+  if(!q.trim()) return [];
+  const lq = q.toLowerCase();
+  return searchIndex.filter(item =>
+    item.label.toLowerCase().includes(lq) || item.desc.toLowerCase().includes(lq)
+  ).slice(0, 6);
+}
+
+/* ── INLINE SEARCH (topbar) ── */
+function doSearch(q) {
+  const drop = document.getElementById('searchDrop');
+  const results = runSearch(q);
+  if(!q.trim() || results.length === 0) { drop.style.display='none'; return; }
+  drop.style.display = 'block';
+  drop.innerHTML = results.map((r,i) => `
+    <div class="sr-item" data-page="${r.page}" style="display:flex;align-items:center;gap:10px;padding:9px 13px;cursor:pointer;transition:background .12s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''" onclick="go('${r.page}');clearInlineSearch()">
+      <i class="ti ${r.icon}" style="font-size:15px;color:var(--acc);width:18px;text-align:center"></i>
+      <div><div style="font-size:13px;color:var(--t1)">${r.label}</div><div style="font-size:11px;color:var(--t3)">${r.desc}</div></div>
+      <i class="ti ti-arrow-right" style="margin-left:auto;font-size:13px;color:var(--t3)"></i>
+    </div>`).join('');
+}
+function searchKey(e) {
+  if(e.key === 'Escape') clearInlineSearch();
+  if(e.key === 'Enter') {
+    const first = document.querySelector('#searchDrop .sr-item');
+    if(first) first.click();
+  }
+  if((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearchOverlay(); }
+}
+function clearInlineSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchDrop').style.display = 'none';
+}
+
+/* ── SEARCH OVERLAY (⌘K) ── */
+function openSearchOverlay() {
+  const ov = document.getElementById('searchOverlay');
+  ov.style.display = 'flex';
+  setTimeout(() => document.getElementById('overlayInput').focus(), 50);
+  doOverlaySearch('');
+}
+function closeSearch() {
+  document.getElementById('searchOverlay').style.display = 'none';
+  document.getElementById('overlayInput').value = '';
+}
+function doOverlaySearch(q) {
+  const res = document.getElementById('overlayResults');
+  const results = q.trim() ? runSearch(q) : searchIndex.slice(0,8);
+  res.innerHTML = results.length ? results.map(r => `
+    <div style="display:flex;align-items:center;gap:11px;padding:10px 12px;cursor:pointer;border-radius:var(--rs);transition:background .12s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''" onclick="go('${r.page}');closeSearch()">
+      <div style="width:32px;height:32px;background:rgba(124,111,205,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="ti ${r.icon}" style="font-size:15px;color:var(--acc)"></i>
+      </div>
+      <div style="flex:1"><div style="font-size:13px;color:var(--t1);font-weight:500">${r.label}</div><div style="font-size:11px;color:var(--t3)">${r.desc}</div></div>
+      <i class="ti ti-arrow-right" style="font-size:13px;color:var(--t3)"></i>
+    </div>`).join('') : `<div style="text-align:center;padding:20px;font-size:13px;color:var(--t3)">No results for "${q}"</div>`;
+}
+function overlayKey(e) {
+  if(e.key === 'Escape') closeSearch();
+  if(e.key === 'Enter') {
+    const first = document.querySelector('#overlayResults div[onclick]');
+    if(first) first.click();
+  }
+}
+// ⌘K shortcut
+document.addEventListener('keydown', e => {
+  if((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearchOverlay(); }
+  if(e.key === 'Escape') { closeSearch(); closeAllPanels(); }
+});
+// click outside inline search to close
+document.addEventListener('click', e => {
+  if(!e.target.closest('.sbox')) clearInlineSearch();
+  if(!e.target.closest('#bellBtn')) {
+    const p = document.getElementById('notifPanel');
+    if(p) p.style.display = 'none';
+  }
+});
+
+/* ── NOTIFICATION PANEL ── */
+function togglePanel(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+function clearNotifs() {
+  document.querySelectorAll('.notif-item .nd, #notifDot').forEach(d => d.style.display='none');
+  document.querySelectorAll('.notif-item > div:first-child').forEach(d => { d.style.background='var(--t3)'; });
+  document.getElementById('notifDot').style.display = 'none';
+}
+function closeAllPanels() {
+  document.querySelectorAll('#notifPanel').forEach(p => p.style.display='none');
+}
+
+/* ── DARK / LIGHT THEME TOGGLE ── */
+let isLight = false;
+function toggleTheme() {
+  isLight = !isLight;
+  const r = document.documentElement.style;
+  const icon = document.getElementById('themeIcon');
+  if(isLight) {
+    r.setProperty('--bg0','#f0f2f8');
+    r.setProperty('--bg1','#ffffff');
+    r.setProperty('--bg2','#f5f6fa');
+    r.setProperty('--bg3','#e8eaf0');
+    r.setProperty('--t1','#1a1d2e');
+    r.setProperty('--t2','#4a5068');
+    r.setProperty('--t3','#8890a8');
+    r.setProperty('--bd','#d8dae8');
+    icon.className = 'ti ti-sun';
+    document.getElementById('themeBtn').style.color = 'var(--acc4)';
+  } else {
+    r.setProperty('--bg0','#0f1117');
+    r.setProperty('--bg1','#171b26');
+    r.setProperty('--bg2','#1e2333');
+    r.setProperty('--bg3','#252a3a');
+    r.setProperty('--t1','#f0f2f8');
+    r.setProperty('--t2','#9aa0b8');
+    r.setProperty('--t3','#666d85');
+    r.setProperty('--bd','#2a2f42');
+    icon.className = 'ti ti-moon';
+    document.getElementById('themeBtn').style.color = '';
+  }
+}
+
+/* ── INIT ── */
+window.addEventListener('load', () => {
+  // focus search on ⌘K hint click
+  document.getElementById('kbdHint').style.cursor = 'pointer';
+  document.getElementById('kbdHint').addEventListener('click', openSearchOverlay);
+});
+</script>
+</body>
+</html>
